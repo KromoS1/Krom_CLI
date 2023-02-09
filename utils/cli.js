@@ -23,11 +23,30 @@ const flags = {
 		type: `boolean`,
 		alias: `v`,
 		desc: `Print CLI version`
-	}
+	},
+	one: {
+		type: `boolean`,
+		default: false,
+		alias: `o`,
+		desc: `One Project update`
+	},
+	two: {
+		type: `boolean`,
+		default: false,
+		alias: `t`,
+		desc: `Two project update`
+	},
+	projectName: {
+		type: `boolean`,
+		default: false,
+		alias: `n`,
+		desc: `Name Project`
+	},
 };
 
 const commands = {
-	help: { desc: `Print help info` }
+	help: { desc: `Print help info` },
+	build: {desc: 'Command for build Project'}
 };
 
 const helpText = meowHelp({
