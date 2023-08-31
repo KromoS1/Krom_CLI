@@ -1,8 +1,8 @@
 {
-	"name": "Kromos",
-	"description": "my cli command",
-	"version": "1.0.0",
+	"name": "kromos",
+	"version": "1.1.0",
 	"license": "UNLICENSED",
+	"description": "my cli command",
 	"bin": {
 		"Kromos": "index.js",
 		"krom": "index.js"
@@ -18,7 +18,7 @@
 	],
 	"files": [
 		"index.js",
-		"utils"
+		"src"
 	],
 	"scripts": {
 		"format": "prettier --write \"./**/*.{js,json}\""
@@ -40,7 +40,8 @@
 		"meow": "^9.0.0",
 		"minimist": "^1.2.7",
 		"simple-git": "^3.16.0",
-		"touch": "^3.1.0"
+		"touch": "^3.1.0",
+		"node-clipboardy": "^1.0.3"
 	},
 	"devDependencies": {
 		"prettier": "^2.8.4"

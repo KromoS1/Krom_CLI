@@ -1,5 +1,5 @@
 const welcome = require('cli-welcome');
-const pkg = require('./../package.json');
+const pkg = require('../../package.json');
 const unhandled = require('cli-handle-unhandled');
 
 module.exports = ({ clear = true }) => {
@@ -7,7 +7,6 @@ module.exports = ({ clear = true }) => {
 	welcome({
 		title: `Kromos`,
 		tagLine: `by Roman Shaulinski`,
-		description: pkg.description,
 		version: pkg.version,
 		bgColor: '#36BB09',
 		color: '#000000',
