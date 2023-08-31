@@ -16,7 +16,8 @@ module.exports = flags => {
 
 	if (flags.files) {
 
-		fs.readdir('/home/kromos/Projects/Kromos/src', (err, files) => {
+		fs.readdir(`${process.env.PATH_DIR}`, (err, files) => {
+			
 			if (err) {
 				customLogs.error('Directory read error');
 				customLogs.log(err);

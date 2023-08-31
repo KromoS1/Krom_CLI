@@ -2,7 +2,7 @@ const welcome = require('cli-welcome');
 const pkg = require('../../package.json');
 const unhandled = require('cli-handle-unhandled');
 
-module.exports = ({ clear = true }) => {
+module.exports = () => {
 	unhandled();
 	welcome({
 		title: `Kromos`,
@@ -11,6 +11,6 @@ module.exports = ({ clear = true }) => {
 		bgColor: '#36BB09',
 		color: '#000000',
 		bold: true,
-		clear
+		clear: true
 	});
 };

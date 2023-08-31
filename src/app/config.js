@@ -6,10 +6,7 @@ module.exports = {
 		help: 'help'
 	},
 	flags: {
-		sh: 'sh',
-		bash: 'bash',
-		zh: 'zh',
-		path:'path',
-		clear: 'clear'
+		all: ['sh', 'bash', 'zh', 'path', 'files'],
+		shell: ['sh', 'bash', 'zh']
 	}
 };

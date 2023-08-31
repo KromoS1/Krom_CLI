@@ -19,9 +19,14 @@ module.exports = () => {
 			executor.save(cli.input[1]);
 			break;
 		}
-		case command.show:{
+		case command.show: {
 
 			executor.show(cli.flags);
+			break;
+		}
+		case command.run: {
+
+			executor.run(cli.flags, cli.input[1]);
 			break;
 		}
 	}

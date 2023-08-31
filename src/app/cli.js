@@ -28,12 +28,6 @@ const flags = {
 		default: false,
 		alias: `f`,
 		desc: `Use to view a list of executable files in a directory`
-	},
-	clear: {
-		type: `boolean`,
-		default: true,
-		alias: `c`,
-		desc: `Clear the console`
 	}
 };
 
