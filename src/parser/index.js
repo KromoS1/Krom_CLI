@@ -1,6 +1,6 @@
 const cli = require('../app/cli');
-const executor = require('../executor')
-const confCli = require('../app/config')
+const executor = require('../executor');
+const confCli = require('../app/config');
 
 module.exports = () => {
 

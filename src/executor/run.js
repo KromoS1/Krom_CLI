@@ -1,7 +1,8 @@
-const { exec,spawn } = require('child_process');
+const { spawn } = require('child_process');
 const customLogs = require('../utils/customLogs');
 const confCli = require('../app/config');
 const chalk = require('chalk');
+const dir_path = require('../dir_path');
 
 const getFlagsShell = (flags) => {
 
@@ -17,13 +18,14 @@ const getFlagsShell = (flags) => {
 	return current_flag;
 }
 
-module.exports = (flags, file_name) => {
+module.exports = async (flags, file_name) => {
 
 	const type_shell = getFlagsShell(flags);
+	const path = await dir_path.get();
 
 	customLogs.success('I start execution\n');
 
-	const process_exec = spawn(`${type_shell}`, [`${process.env.PATH_DIR}/${file_name}`]);
+	const process_exec = spawn(`${type_shell}`, [`${path}/${file_name}`]);
 
 	process_exec.stdout.on('data', data => {
 		console.log(chalk.bgYellow('Output:'), `\n\n${data}`);

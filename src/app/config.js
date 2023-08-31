@@ -8,5 +8,5 @@ module.exports = {
 	flags: {
 		all: ['sh', 'bash', 'zh', 'path', 'files'],
 		shell: ['sh', 'bash', 'zh']
-	}
+	},
 };
