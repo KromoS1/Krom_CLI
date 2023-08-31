@@ -5,7 +5,7 @@ const confCli = require('../app/config')
 module.exports = () => {
 
 	const current_command = cli.input[0];
-	const {command, flags} = confCli;
+	const {command} = confCli;
 
 	switch(current_command) {
 
@@ -15,7 +15,14 @@ module.exports = () => {
 			break;
 		}
 		case command.save: {
+
 			executor.save(cli.input[1]);
+			break;
+		}
+		case command.show:{
+
+			executor.show(cli.flags);
+			break;
 		}
 	}
 }
