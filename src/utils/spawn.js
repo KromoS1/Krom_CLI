@@ -47,7 +47,7 @@ const consoleExec = async (commString) => {
 				return;
 			}
 
-			console.log(chalk.bgYellow('Текущая ветка Git:'), `\n\n${stdout}`);
+			console.log(chalk.bgYellow('Output:'), `\n\n${stdout}`);
 		});
 	})
 }
