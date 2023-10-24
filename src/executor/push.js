@@ -6,14 +6,18 @@ const chalk = require('chalk');
 
 module.exports = async () => {
 
-	const branch_name = await consoleSpawn("git symbolic-ref --short HEAD");
+	let branch_name = await consoleSpawn("git symbolic-ref --short HEAD");
+
+	branch_name = branch_name.trim();
 
 	if (branch_name == 'main') {
 
 	} else {
 
-		const local_commit_push = `git add . && git commit -am "${branch_name}" && git push -u origin ${branch_name}`;
+		const git_add = 'git add .';
+		const local_commit = `git commit -am "${branch_name}"`;
+		const local_push = `git push -u origin ${branch_name}`;
 
-		await consoleExec(`${local_commit_push}`);
+		await consoleExec(`${git_add}; ${local_commit}; ${local_push}`)
 	}
 };

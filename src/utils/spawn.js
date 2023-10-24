@@ -4,6 +4,8 @@ const chalk = require('chalk');
 
 const consoleSpawn = async (commString) => {
 
+	console.log(chalk.bgYellow('Command:'), `\n\n${commString}\n`);
+
 	return new Promise((res, rej) => {
 
 		const arrCommand = commString.split(' ');
@@ -15,8 +17,8 @@ const consoleSpawn = async (commString) => {
 
 		process_exec.stdout.on('data', data => {
 
-			console.log(chalk.bgYellow('Output:'), `\n\n${data}`);
-			res(data);
+			console.log(chalk.bgYellow('Output:'), `\n\n${data}\n`);
+			res(`${data}`);
 		});
 
 		process_exec.stderr.on('data', data => {
@@ -26,13 +28,15 @@ const consoleSpawn = async (commString) => {
 			rej(data)
 		});
 
-		process_exec.on('close', code => {
-			customLogs.success(`Process completed with code: ${code}`);
-		});
+		// process_exec.on('close', code => {
+		// 	customLogs.success(`Process completed with code: ${code}`);
+		// });
 	})
 }
 
 const consoleExec = async (commString) => {
+
+	console.log(chalk.bgYellow('Command:'), `\n\n${commString}\n`);
 
 	return new Promise((res, rej) => {
 
