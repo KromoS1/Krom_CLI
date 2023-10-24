@@ -17,12 +17,6 @@ const flags = {
 		default: false,
 		desc: `Command line shell -> zsh`
 	},
-	path: {
-		type: `boolean`,
-		default: false,
-		alias: `p`,
-		desc: `Use to view the actual directory path`
-	},
 	files: {
 		type: `boolean`,
 		default: false,
@@ -33,7 +27,7 @@ const flags = {
 
 const commands = {
 	run: { desc: 'Starts the execution of the executable file' },
-	save: { desc: 'Saves the path to the directory with executable files.' },
+	push: { desc: 'Push commits project.' },
 	show: {
 		desc: 'Shows the actual path to the directory with executable files'
 	},
@@ -54,7 +48,7 @@ const helpText = meowHelp({
 		},
 		{
 			command: 'show',
-			flags: ['path','files']
+			flags: ['files']
 		}
 	]
 });

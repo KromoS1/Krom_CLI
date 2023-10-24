@@ -14,9 +14,9 @@ module.exports = () => {
 			cli.showHelp(0);
 			break;
 		}
-		case command.save: {
+		case command.push: {
 
-			executor.save(cli.input[1]);
+			executor.push();
 			break;
 		}
 		case command.show: {

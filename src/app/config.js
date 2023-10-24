@@ -1,7 +1,7 @@
 module.exports = {
 	command: {
 		run: 'run',
-		save: 'save',
+		push: 'push',
 		show: 'show',
 		help: 'help'
 	},

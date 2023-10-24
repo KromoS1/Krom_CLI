@@ -1,49 +1,50 @@
 {
-	"name": "kromos",
-	"version": "1.1.0",
-	"license": "UNLICENSED",
-	"description": "my cli command",
-	"bin": {
-		"Kromos": "index.js",
-		"krom": "index.js"
-	},
-	"author": {
-		"name": "Roman Shaulinski",
-		"email": "krakenHRI@gmail.com",
-		"url": "none"
-	},
-	"keywords": [
-		"Kromos",
-		"Roman Shaulinski"
-	],
-	"files": [
-		"index.js",
-		"src"
-	],
-	"scripts": {
-		"format": "prettier --write \"./**/*.{js,json}\""
-	},
-	"dependencies": {
-		"@octokit/rest": "^19.0.7",
-		"chalk": "^4.1.2",
-		"clear": "^0.1.0",
-		"cli-alerts": "^1.2.2",
-		"cli-handle-error": "^4.4.0",
-		"cli-handle-unhandled": "^1.1.1",
-		"cli-meow-help": "^3.1.0",
-		"cli-welcome": "^2.2.2",
-		"clui": "^0.3.6",
-		"configstore": "^6.0.0",
-		"figlet": "^1.5.2",
-		"inquirer": "^9.1.4",
-		"lodash": "^4.17.21",
-		"meow": "^9.0.0",
-		"minimist": "^1.2.7",
-		"simple-git": "^3.16.0",
-		"touch": "^3.1.0",
-		"node-clipboardy": "^1.0.3"
-	},
-	"devDependencies": {
-		"prettier": "^2.8.4"
-	}
+  "name": "kromos",
+  "version": "1.1.0",
+  "license": "UNLICENSED",
+  "description": "my cli command",
+  "bin": {
+    "kromos": "index.js",
+    "krom": "index.js"
+  },
+  "author": {
+    "name": "Roman Shaulinski",
+    "email": "krakenHRI@gmail.com",
+    "url": "none"
+  },
+  "keywords": [
+    "Kromos",
+    "Roman Shaulinski"
+  ],
+  "files": [
+    "index.js",
+    "src"
+  ],
+  "scripts": {
+    "format": "prettier --write \"./**/*.{js,json}\""
+  },
+  "dependencies": {
+    "@octokit/rest": "^19.0.7",
+    "chalk": "^4.1.2",
+    "clear": "^0.1.0",
+    "cli-alerts": "^1.2.2",
+    "cli-handle-error": "^4.4.0",
+    "cli-handle-unhandled": "^1.1.1",
+    "cli-meow-help": "^3.1.0",
+    "cli-welcome": "^2.2.2",
+    "clui": "^0.3.6",
+    "configstore": "^6.0.0",
+    "dotenv": "^16.3.1",
+    "figlet": "^1.5.2",
+    "inquirer": "^9.1.4",
+    "lodash": "^4.17.21",
+    "meow": "^9.0.0",
+    "minimist": "^1.2.7",
+    "node-clipboardy": "^1.0.3",
+    "simple-git": "^3.16.0",
+    "touch": "^3.1.0"
+  },
+  "devDependencies": {
+    "prettier": "^2.8.4"
+  }
 }

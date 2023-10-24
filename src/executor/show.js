@@ -1,19 +1,12 @@
 const fs = require('fs');
 const customLogs = require('../utils/customLogs');
-const dir_path = require('../dir_path');
 
 module.exports = async flags => {
 
-	const path = await dir_path.get();
+	const path = process.env.PATH_SCRIPTS;
 
 	if(flags.path && flags.files) {
 		customLogs.warning('Use one of the flags')
-		return;
-	}
-
-	if(flags.path) {
-		
-		customLogs.log(`----> ${path}\n`, 'yellow');
 		return;
 	}
 
