@@ -8,12 +8,12 @@ module.exports = async () => {
 
 	const branch_name = await consoleSpawn("git symbolic-ref --short HEAD");
 
-	// if (branch_name == 'main') {
+	if (branch_name == 'main') {
 
-	// } else {
+	} else {
 
-	const local_commit_push = `git add . && git commit -am "${branch_name}" && git push -u origin ${branch_name}`;
+		const local_commit_push = `git add . && git commit -am "${branch_name}" && git push -u origin ${branch_name}`;
 
-	await consoleExec(`${local_commit_push}`);
-	// }
+		await consoleExec(`${local_commit_push}`);
+	}
 };

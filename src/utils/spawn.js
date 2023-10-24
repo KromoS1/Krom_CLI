@@ -43,11 +43,11 @@ const consoleExec = async (commString) => {
 				return;
 			}
 			if (stderr) {
-				console.log(chalk.bgRedBright('Error Output:'), chalk.red(`\n\n${stderr}`));
+				console.log(chalk.yellow(`\n\n${stderr}`));
 				return;
 			}
 
-			console.log(chalk.bgYellow('Текущая ветка Git:'), `\n\n${stdout}`);
+			console.log(chalk.bgYellow('Output:'), `\n\n${stdout}`);
 		});
 	})
 }
