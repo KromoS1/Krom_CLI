@@ -12,7 +12,7 @@ module.exports = async () => {
 
 	// } else {
 
-	const local_commit_push = `git add . && git commit -am ${branch_name} && git push -u origin ${branch_name}`;
+	const local_commit_push = `git add . && git commit -am "${branch_name}" && git push -u origin ${branch_name}`;
 
 	await consoleExec(`${local_commit_push}`);
 	// }
