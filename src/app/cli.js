@@ -44,7 +44,7 @@ const helpText = meowHelp({
 			flags: [`bash`]
 		},
 		{
-			command: `save <path>`,
+			command: `push`,
 		},
 		{
 			command: 'show',

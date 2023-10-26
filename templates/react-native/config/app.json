@@ -1,0 +1,22 @@
+{
+  "expo": {
+    "name": "",
+    "slug": "",
+    "owner": "Roman Shaulinski",
+    "jsEngine": "hermes",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "assetBundlePatterns": ["**/*"],
+    "extra": {
+      "eas": {
+        "projectId": ""
+      }
+    }
+  }
+}

@@ -2,6 +2,7 @@ const { consoleSpawn } = require('../utils/spawn');
 const customLogs = require('../utils/customLogs');
 const confCli = require('../app/config');
 const chalk = require('chalk');
+const { APP_DIR, PATH_SCRIPTS } = require('../variable')
 
 const getFlagsShell = (flags) => {
 
@@ -20,7 +21,7 @@ const getFlagsShell = (flags) => {
 module.exports = async (flags, file_name) => {
 
 	const type_shell = getFlagsShell(flags);
-	const path = process.env.PATH_SCRIPTS;
+	const path = APP_DIR + PATH_SCRIPTS;
 
 	customLogs.success('I start execution\n');
 
