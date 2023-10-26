@@ -1,23 +1,16 @@
 const { consoleSpawn, consoleExec } = require('../utils/spawn');
-const customLogs = require('../utils/customLogs');
-const confCli = require('../app/config');
-const chalk = require('chalk');
 
-
-module.exports = async () => {
+module.exports = async (flags, message) => {
 
 	let branch_name = await consoleSpawn("git symbolic-ref --short HEAD");
 
 	branch_name = branch_name.trim();
 
-	if (branch_name == 'main') {
+	const message_commit = flags.message ? message : branch_name;
 
-	} else {
+	const git_add = 'git add .';
+	const local_commit = `git commit -am "${message_commit}"`;
+	const local_push = `git push -u origin ${branch_name}`;
 
-		const git_add = 'git add .';
-		const local_commit = `git commit -am "${branch_name}"`;
-		const local_push = `git push -u origin ${branch_name}`;
-
-		await consoleExec(`${git_add}; ${local_commit}; ${local_push}`)
-	}
+	await consoleExec(`${git_add}; ${local_commit}; ${local_push}`)
 };

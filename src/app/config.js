@@ -6,7 +6,7 @@ module.exports = {
 		help: 'help'
 	},
 	flags: {
-		all: ['sh', 'bash', 'zh', 'path', 'files'],
+		all: ['sh', 'bash', 'zh', 'path', 'files', 'message'],
 		shell: ['sh', 'bash', 'zh']
 	},
 };

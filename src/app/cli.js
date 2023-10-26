@@ -22,6 +22,12 @@ const flags = {
 		default: false,
 		alias: `f`,
 		desc: `Use to view a list of executable files in a directory`
+	},
+	message: {
+		type: `boolean`,
+		default: false,
+		alias: `m`,
+		desc: `Message for commit`
 	}
 };
 
@@ -45,6 +51,7 @@ const helpText = meowHelp({
 		},
 		{
 			command: `push`,
+			flags: [`message`]
 		},
 		{
 			command: 'show',

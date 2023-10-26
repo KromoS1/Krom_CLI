@@ -16,7 +16,7 @@ module.exports = () => {
 		}
 		case command.push: {
 
-			executor.push();
+			executor.push(cli.flags, cli.input[1]);
 			break;
 		}
 		case command.show: {

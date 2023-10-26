@@ -1,7 +1,6 @@
-const { consoleSpawn } = require('../utils/spawn');
+const { consoleSpawnScript } = require('../utils/spawn');
 const customLogs = require('../utils/customLogs');
 const confCli = require('../app/config');
-const chalk = require('chalk');
 const { APP_DIR, PATH_SCRIPTS } = require('../variable')
 
 const getFlagsShell = (flags) => {
@@ -25,5 +24,5 @@ module.exports = async (flags, file_name) => {
 
 	customLogs.success('I start execution\n');
 
-	await consoleSpawn(`${type_shell} ${path}/${file_name}`);
+	await consoleSpawnScript(`${type_shell} ${path}/${file_name}`);
 };
