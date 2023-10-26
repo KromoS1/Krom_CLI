@@ -1,33 +1,42 @@
-const cli = require('../app/cli');
+const { CLI } = require('../app');
 const executor = require('../executor');
 const confCli = require('../app/config');
 
-module.exports = () => {
+class Parser {
 
-	const current_command = cli.input[0];
-	const {command} = confCli;
+	static init() {
 
-	switch(current_command) {
+		const cli = CLI.cli;
 
-		case command.help: {
+		const current_command = cli.input[0];
+		const {command} = confCli;
 
-			cli.showHelp(0);
-			break;
-		}
-		case command.push: {
+		switch(current_command) {
 
-			executor.push(cli.flags, cli.input[1]);
-			break;
-		}
-		case command.show: {
+			case command.help: {
 
-			executor.show(cli.flags);
-			break;
-		}
-		case command.run: {
+				cli.showHelp(0);
+				break;
+			}
+			case command.push: {
 
-			executor.run(cli.flags, cli.input[1]);
-			break;
+				executor.push(cli.flags, cli.input[1]);
+				break;
+			}
+			case command.show: {
+
+				executor.show(cli.flags);
+				break;
+			}
+			case command.script: {
+
+				executor.script(cli.flags, cli.input[1]);
+				break;
+			}
 		}
 	}
+}
+
+module.exports = {
+	Parser
 }
