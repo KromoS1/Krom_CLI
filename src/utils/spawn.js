@@ -36,7 +36,7 @@ const consoleSpawn = async (commString) => {
 
 		child.stdout.on('data', data => {
 
-			console.log(chalk.bgYellow('Output:'), `\n\n${data}\n`);
+			// console.log(chalk.bgYellow('Output:'), `\n\n${data}\n`);
 			res(`${data}`);
 		});
 
