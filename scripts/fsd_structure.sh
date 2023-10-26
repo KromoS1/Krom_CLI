@@ -1,20 +1,16 @@
 #!/bin/zsh;
 
-GREEN='\033[0;32m'      #  ${GREEN}
-CYAN='\033[0;36m'       #  ${CYAN}
-YELLOW='\033[0;33m'     #  ${YELLOW}
-BREAK='\033[m'       #  ${BREAK}
-BOLD='\033[1m'       #  ${BOLD}  
+dir_path="$(dirname "$(realpath "$0")")"
 
-echo "${CYAN}Проверка и установка incubator-cli${BREAK}";
+source $dir_path/common.sh;
+
+# echo -e "${CYAN}Проверка и установка incubator-cli${BREAK}";
 
 # npm install -g incubator-cli;
 
-echo "${CYAN}Установка слушателя incubator-cli${BREAK}";
+echo -e "${CYAN}Установка слушателя incubator-cli${BREAK}";
 
 incubator install linters;
-
-echo "${CYAN}Захожу в src${BREAK}";
 
 mkdir "src";
 
@@ -34,7 +30,7 @@ cd ../;
 
 rm yarn.lock;
 
-echo "${CYAN}Обновляю файл .eslintrc.js${BREAK}";
+echo -e "${CYAN}Обновляю файл .eslintrc.js${BREAK}";
 
 echo "module.exports = {
   extends: [
@@ -177,5 +173,4 @@ echo "module.exports = {
   ],
 }" > .eslintrc.js;
 
-echo "${GREEN}Complete command";
-
+echo -e "${GREEN}Создание структуры завершено";
