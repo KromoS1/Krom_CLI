@@ -1,5 +1,5 @@
 const { CLI } = require('../app');
-const executor = require('../executor');
+const {Push, Show, Script} = require('../executor');
 const confCli = require('../app/config');
 
 class Parser {
@@ -20,23 +20,21 @@ class Parser {
 			}
 			case command.push: {
 
-				executor.push(cli.flags, cli.input[1]);
+				Push.execute(cli.flags, cli.input[1]);
 				break;
 			}
 			case command.show: {
 
-				executor.show(cli.flags);
+				Show.execute(cli.flags);
 				break;
 			}
 			case command.script: {
 
-				executor.script(cli.flags, cli.input[1]);
+				Script.execute(cli.flags, cli.input[1]);
 				break;
 			}
 		}
 	}
 }
 
-module.exports = {
-	Parser
-}
+module.exports = Parser;

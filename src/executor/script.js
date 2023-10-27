@@ -3,26 +3,32 @@ const customLogs = require('../utils/customLogs');
 const confCli = require('../app/config');
 const { APP_DIR, PATH_SCRIPTS } = require('../variable')
 
-const getFlagsShell = (flags) => {
 
-	let current_flag = '';
+class Script {
 
-	confCli.flags.shell.forEach(shell => {
+	static #getFlagsShell(flags) {
 
-		if (flags[shell]) {
-			current_flag = shell
-		}
-	});
+		let current_flag = '';
+	
+		confCli.flags.shell.forEach(shell => {
+	
+			if (flags[shell]) {
+				current_flag = shell
+			}
+		});
+	
+		return current_flag;
+	}
 
-	return current_flag;
+	static async execute(flags, file_name) {
+
+		const type_shell = Script.#getFlagsShell(flags);
+		const path = APP_DIR + PATH_SCRIPTS;
+
+		customLogs.success('I start execution\n');
+
+		await consoleSpawnScript(`${type_shell} ${path}/${file_name}`);
+	}
 }
 
-module.exports = async (flags, file_name) => {
-
-	const type_shell = getFlagsShell(flags);
-	const path = APP_DIR + PATH_SCRIPTS;
-
-	customLogs.success('I start execution\n');
-
-	await consoleSpawnScript(`${type_shell} ${path}/${file_name}`);
-};
+module.exports = Script;

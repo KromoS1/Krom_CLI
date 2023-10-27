@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
-const { CLI }= require('./src/app');
-const { Parser }= require('./src/parser');
+const { CLI } = require('./src/app');
+const Parser = require('./src/parser');
 
 (async () => {
 
