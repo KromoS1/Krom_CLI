@@ -2,30 +2,35 @@ const fs = require('fs');
 const customLogs = require('../utils/customLogs');
 const { APP_DIR, PATH_SCRIPTS } = require('../variable')
 
-module.exports = async flags => {
+class Show {
 
-	const path = APP_DIR + PATH_SCRIPTS;
+	static async execute(flags) {
 
-	if (flags.path && flags.files) {
-		customLogs.warning('Use one of the flags')
-		return;
-	}
+		const path = APP_DIR + PATH_SCRIPTS;
 
-	if (flags.files) {
+		if (flags.path && flags.files) {
+			customLogs.warning('Use one of the flags')
+			return;
+		}
 
-		fs.readdir(`${path}`, (err, files) => {
+		if (flags.files) {
 
-			if (err) {
-				customLogs.error('Directory read error');
-				customLogs.log(err);
-				return;
-			}
+			fs.readdir(`${path}`, (err, files) => {
 
-			files.forEach(file => {
-				customLogs.log(`----> ${file}\n`, 'blue');
+				if (err) {
+					customLogs.error('Directory read error');
+					customLogs.log(err);
+					return;
+				}
+
+				files.forEach(file => {
+					customLogs.log(`----> ${file}\n`, 'blue');
+				});
 			});
-		});
 
-		return;
+			return;
+		}
 	}
-};
+}
+
+module.exports = Show;

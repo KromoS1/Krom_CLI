@@ -1,5 +1,6 @@
 module.exports = {
-	run: require('./run'),
-	push: require('./push'),
-	show: require('./show')
+	Script: require('./script'),
+	init: require('./init'),
+	Push: require('./push'),
+	Show: require('./show'),
 };
