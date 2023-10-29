@@ -1,6 +1,6 @@
 module.exports = {
 	Script: require('./script'),
-	init: require('./init'),
-	Push: require('./push'),
+	InitRepo: require('./initRepo'),
+	GitHub: require('./github/index.js'),
 	Show: require('./show'),
 };
