@@ -3,7 +3,7 @@ const pkg = require('../../package.json');
 const confCommands = {
 	script: { desc: 'use bash scripts' },
 	push: { desc: 'Push commits project.' },
-	init: { desc:'Initialize repository in GitHub'},
+	init_repo: { desc:'Initialize repository in GitHub'},
 	show: { desc: 'Shows the actual path to the directory with executable files' },
 	help: { desc: `Print help info` }
 }
@@ -41,7 +41,7 @@ const confFlags = {
 module.exports = {
 	command: {
 		script: 'script',
-		init: 'init',
+		initRepo: 'init_repo',
 		push: 'push',
 		show: 'show',
 		help: 'help'
@@ -65,7 +65,7 @@ module.exports = {
 				flags: [`message`]
 			},
 			{
-				command: `init`,
+				command: `init_repo`,
 			},
 			{
 				command: 'show',
