@@ -21,6 +21,8 @@ class GitHub {
 				.add('./*')
 				.commit(message_commit)
 				.push('origin', currentBranch, ['--set-upstream']);
+
+			customLogs.success('Command push complete');
 		} catch (e) {
 			customLogs.log(e.message);
 		}
