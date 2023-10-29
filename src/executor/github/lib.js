@@ -52,15 +52,8 @@ const questions = [
 	}
 ];
 
-const dataGitIgnore =
-	'{node_modules/, /node_modules/, *.7z, *.dmg, *.gz, *.bz2, *.iso, *.jar, *.rar, *.tar, *.zip, *.tgz, *.map, ' +
-	'*.log, *.sql,	*.env, **.DS_Store*, ehthumbs.db, Icon?, Thumbs.db, ._*, **settings.dat*, *.un~,' +
-	'**/.sass-cache, **/.sass-cache/*, **/.map, !assets/js/vendor/, wpcs/, /vendor/, assets/bower_components/*, ' +
-	'/codekit-config.json, *.codekit, **.codekit-cache/*, /README.html, .idea/, library/vendors/composer, assets/img/.DS_Store, .vscode}';
-
 module.exports = {
 	initRepoQuestion,
 	tokenQuestion,
-	questions,
-	dataGitIgnore
+	questions
 };

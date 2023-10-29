@@ -3,13 +3,8 @@ const { Octokit } = require('@octokit/rest');
 const git = require('simple-git')();
 const Configstore = require('configstore');
 
-const { consoleSpawn, consoleExec } = require('../../utils/spawn');
-const {
-	initRepoQuestion,
-	tokenQuestion,
-	questions,
-	dataGitIgnore
-} = require('./lib');
+const { consoleExec } = require('../../utils/spawn');
+const { initRepoQuestion, tokenQuestion, questions } = require('./lib');
 const customLogs = require('../../utils/customLogs');
 const packageJson = require('../../../package.json');
 const config = new Configstore(packageJson.name);
@@ -17,21 +12,22 @@ const { APP_DIR, PATH_SCRIPTS } = require('../../variable');
 
 class GitHub {
 	static async push(flags, message) {
-		let branch_name = await consoleSpawn('git symbolic-ref --short HEAD');
+		const currentBranch = await git.branch().then(branch => branch.current);
 
-		branch_name = branch_name.trim();
+		const message_commit = flags.message ? message : currentBranch;
 
-		const message_commit = flags.message ? message : branch_name;
-
-		const git_add = 'git add .';
-		const local_commit = `git commit -am "${message_commit}"`;
-		const local_push = `git push -u origin ${branch_name}`;
-
-		await consoleExec(`${git_add}; ${local_commit}; ${local_push}`);
+		try {
+			await git
+				.add('./*')
+				.commit(message_commit)
+				.push('origin', currentBranch, ['--set-upstream']);
+		} catch (e) {
+			customLogs.log(e.message);
+		}
 	}
 
 	static async #authenticate() {
-		customLogs.warning('Authenticating...	');
+		customLogs.log('Authenticating...', 'gray');
 
 		let token = config.get('github_token');
 
@@ -78,6 +74,7 @@ class GitHub {
 				data
 			);
 
+			customLogs.log('Created remote repository', 'gray');
 			return response.data.ssh_url;
 		} catch (error) {
 			throw new Error('A repository with the same name already exists.');
@@ -92,7 +89,12 @@ class GitHub {
 				.commit('Initial commit')
 				.branch(['-M', 'main'])
 				.addRemote('origin', url)
-				.push(url, 'main', ['--set-upstream']);
+				.push('origin', 'main', ['--set-upstream']);
+
+			customLogs.log(
+				'Local repository is initialized and linked to remote repository',
+				'gray'
+			);
 
 			return true;
 		} catch (error) {
@@ -104,19 +106,22 @@ class GitHub {
 		if (isFirstQuestion) {
 			const answer = await inquirer.prompt(initRepoQuestion);
 
-			if (answer.proceed !== 'Yes') {
-				customLogs.log('Okay, bye.', 'gray');
-				return false;
+			switch (answer.proceed) {
+				case 'Yes':
+				case 'yes':
+				case 'y':
+					return true;
 			}
-		}
 
-		return true;
+			customLogs.log('Okay, bye.', 'gray');
+			return false;
+		}
 	}
 
 	static async #addGitIgnore() {
 		const path = APP_DIR + PATH_SCRIPTS;
 
-		await consoleExec(`bash ${path}/add_gitignore.sh`);
+		await consoleExec(`bash ${path}/add_gitignore.sh`, false);
 	}
 
 	static async initRepo(isFirstQuestion = true) {
@@ -129,8 +134,7 @@ class GitHub {
 			const isCreateRepo = await GitHub.#bindNewRepo(url_repo);
 
 			if (isCreateRepo) {
-				customLogs.success('Repository created successfully!');
-				customLogs.success(url_repo, 'bgBlueBright');
+				customLogs.success('Command complete');
 			}
 		}
 	}

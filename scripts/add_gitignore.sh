@@ -11,6 +11,8 @@ source $script_path/common.sh;
 
 cd ~ && cd $current_dir;
 
+echo "$PWD pwd";
+
 echo -e "${YELLOW}Копирование файла .gitignore из шаблона";
 
 cp $krom_dir/.gitignore ./;
