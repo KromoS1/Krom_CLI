@@ -9,11 +9,14 @@ const customLogs = require('../../utils/customLogs');
 const packageJson = require('../../../package.json');
 const config = new Configstore(packageJson.name);
 const { APP_DIR, PATH_SCRIPTS } = require('../../variable');
+const { Loader } = require('../../utils/loader');
 
 class GitHub {
 	static async push(flags, message) {
-		const currentBranch = await git.branch().then(branch => branch.current);
+		const loader = new Loader();
+		loader.start();
 
+		const currentBranch = await git.branch().then(branch => branch.current);
 		const message_commit = flags.message ? message : currentBranch;
 
 		try {
@@ -22,6 +25,7 @@ class GitHub {
 				.commit(message_commit)
 				.push('origin', currentBranch, ['--set-upstream']);
 
+			loader.stop();
 			customLogs.success('Command push complete');
 		} catch (e) {
 			customLogs.log(e.message);
