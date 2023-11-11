@@ -4,7 +4,7 @@ const initRepoQuestion = [
 	{
 		name: 'proceed',
 		type: 'input',
-		message: 'Proceed to push this project to a Github remote repo?',
+		message: 'Want to add this project to a remote Github repository?',
 		choices: ['Yes', 'No'],
 		default: 'Yes'
 	}

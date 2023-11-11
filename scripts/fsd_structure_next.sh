@@ -4,11 +4,11 @@ dir_path="$(dirname "$(realpath "$0")")"
 
 source $dir_path/common.sh;
 
-# echo -e "${CYAN}Проверка и установка incubator-cli${BREAK}";
+echo -e "${CYAN}Inspection and installation incubator-cli${BREAK}";
 
-# npm install -g incubator-cli;
+bun install -g incubator-cli;
 
-echo -e "${CYAN}Установка слушателя incubator-cli${BREAK}";
+echo -e "${CYAN}Listener Setup incubator-cli${BREAK}";
 
 incubator install linters;
 
@@ -30,7 +30,7 @@ cd ../;
 
 rm yarn.lock;
 
-echo -e "${CYAN}Обновляю файл .eslintrc.js${BREAK}";
+echo -e "${CYAN}File update .eslintrc.js${BREAK}";
 
 echo "module.exports = {
   extends: [
@@ -45,7 +45,7 @@ echo "module.exports = {
     'import/resolver': { typescript: {} },
     'boundaries/elements': [
       { type: 'pages', pattern: 'pages/*' },
-      { type: 'App', pattern: 'app/*' },
+      { type: 'app', pattern: 'app/*' },
       { type: 'processes', pattern: 'processes/*' },
       { type: 'pagesLayer', pattern: 'pagesLayer/*' },
       { type: 'widgets', pattern: 'widgets/*' },
@@ -62,7 +62,7 @@ echo "module.exports = {
         alphabetize: { order: 'asc', caseInsensitive: true },
         'newlines-between': 'always',
         pathGroups: [
-          { group: 'internal', position: 'after', pattern: '@/App/**' },
+          { group: 'internal', position: 'after', pattern: '@/app/**' },
           { group: 'internal', position: 'after', pattern: '@/processes/**' },
           { group: 'internal', position: 'after', pattern: '@/pagesLayer/**' },
           { group: 'internal', position: 'after', pattern: '@/widgets/**' },

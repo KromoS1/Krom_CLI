@@ -3,7 +3,7 @@ const customLogs = require('./customLogs');
 const chalk = require('chalk');
 
 const consoleSpawnScript = async commString => {
-	console.log(chalk.bgYellow('Command:'), `\n\n${commString}\n`);
+	customLogs.log(`\nCommand: \n\n${commString}\n`, 'yellow');
 
 	return new Promise((res, rej) => {
 		const arrCommand = commString.split(' ');
@@ -14,13 +14,14 @@ const consoleSpawnScript = async commString => {
 		const child = spawn(mainComm, otherCommand, { stdio: 'inherit' });
 
 		child.on('close', code => {
-			customLogs.success(`Process completed with code: ${code}`);
+			customLogs.success(`\nProcess completed with code: ${code}\n`);
+			res();
 		});
 	});
 };
 
 const consoleSpawn = async commString => {
-	console.log(chalk.bgYellow('Command:'), `\n\n${commString}\n`);
+	customLogs.log(`\nCommand: \n\n${commString}\n`, 'yellow');
 
 	return new Promise((res, rej) => {
 		const arrCommand = commString.split(' ');

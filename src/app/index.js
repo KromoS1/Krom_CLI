@@ -1,15 +1,16 @@
-const {Initialize} = require('./initialize');
+const { Initialize } = require('./initialize');
 const meow = require('meow');
 const meowHelp = require('cli-meow-help');
 const config = require('./config');
+const getCommandOS = require('../utils/getCommandOS');
 
 class CLI {
-
 	static cli = null;
 
 	static init() {
-		console.log(Initialize, 'dddd')
-		Initialize.greetings()
+		getCommandOS();
+
+		Initialize.greetings();
 
 		const helpText = meowHelp(config.confHelp);
 
@@ -19,4 +20,4 @@ class CLI {
 
 module.exports = {
 	CLI
-}
+};

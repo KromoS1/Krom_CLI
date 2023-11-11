@@ -5,14 +5,14 @@ const chalk = require('chalk');
 const figlet = require('figlet');
 
 class Initialize {
-
 	static greetings() {
-	
 		unhandled();
 		welcome(config.welcome);
 
 		console.log(
-			chalk.cyan(figlet.textSync('K R O M O S', { horizontalLayout: 'full' }))
+			chalk.cyan(
+				figlet.textSync('K R O M O S', { horizontalLayout: 'full' })
+			)
 		);
 	}
 }

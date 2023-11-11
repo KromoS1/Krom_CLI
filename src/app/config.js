@@ -1,29 +1,16 @@
 const pkg = require('../../package.json');
 
 const confCommands = {
-	script: { desc: 'use bash scripts' },
+	template: { desc: 'Starts template creation' },
 	push: { desc: 'Push commits project.' },
-	init_repo: { desc:'Initialize repository in GitHub'},
-	show: { desc: 'Shows the actual path to the directory with executable files' },
+	init_repo: { desc: 'Initialize repository in GitHub' },
+	show: {
+		desc: 'Shows the actual path to the directory with executable files'
+	},
 	help: { desc: `Print help info` }
-}
+};
 
 const confFlags = {
-	sh: {
-		type: `boolean`,
-		default: false,
-		desc: `Command line shell -> Bourne shell`
-	},
-	bash: {
-		type: `boolean`,
-		default: false,
-		desc: `Command line shell -> Bourne-again shell`
-	},
-	zh: {
-		type: `boolean`,
-		default: false,
-		desc: `Command line shell -> zsh`
-	},
 	files: {
 		type: `boolean`,
 		default: false,
@@ -36,36 +23,34 @@ const confFlags = {
 		alias: `m`,
 		desc: `Message for commit`
 	}
-}
+};
 
 module.exports = {
 	command: {
-		script: 'script',
+		template: 'template',
 		initRepo: 'init_repo',
 		push: 'push',
 		show: 'show',
 		help: 'help'
 	},
 	flags: {
-		all: ['sh', 'bash', 'zh', 'path', 'files', 'message'],
-		shell: ['sh', 'bash', 'zh']
+		all: ['files', 'message']
 	},
-	
+
 	confHelp: {
 		name: `krom`,
 		flags: confFlags,
 		commands: confCommands,
 		examples: [
 			{
-				command: `script <filen_name>`,
-				flags: [`bash`]
+				command: `template <file_name>`
 			},
 			{
 				command: `push`,
 				flags: [`message`]
 			},
 			{
-				command: `init_repo`,
+				command: `init_repo`
 			},
 			{
 				command: 'show',
