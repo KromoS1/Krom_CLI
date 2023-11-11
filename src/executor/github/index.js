@@ -1,6 +1,6 @@
 const inquirer = require('inquirer');
 const { Octokit } = require('@octokit/rest');
-const git = require('simple-git')();
+const GIT = require('simple-git');
 const Configstore = require('configstore');
 
 const { consoleExec } = require('../../utils/spawn');
@@ -8,19 +8,22 @@ const { initRepoQuestion, tokenQuestion, questions } = require('./lib');
 const customLogs = require('../../utils/customLogs');
 const packageJson = require('../../../package.json');
 const config = new Configstore(packageJson.name);
-const { APP_DIR, PATH_SCRIPTS } = require('../../variable');
+const { PATH_SCRIPTS } = require('../../variable');
 const { Loader } = require('../../utils/loader');
 
 class GitHub {
 	static async push(flags, message) {
+		const simpleGit = GIT();
 		const loader = new Loader();
 		loader.start();
 
-		const currentBranch = await git.branch().then(branch => branch.current);
+		const currentBranch = await simpleGit
+			.branch()
+			.then(branch => branch.current);
 		const message_commit = flags.message ? message : currentBranch;
 
 		try {
-			await git
+			await simpleGit
 				.add('./*')
 				.commit(message_commit)
 				.push('origin', currentBranch, ['--set-upstream']);
@@ -66,11 +69,15 @@ class GitHub {
 		}
 	}
 
-	static async #createRep(octokit) {
+	static async #createRepo(octokit, app_name) {
+		if (app_name) {
+			questions.shift();
+		}
+
 		const answers = await inquirer.prompt(questions);
 
 		const data = {
-			name: answers.name,
+			name: app_name || answers.name,
 			description: answers.description,
 			private: answers.visibility === 'private'
 		};
@@ -87,9 +94,15 @@ class GitHub {
 		}
 	}
 
-	static async #bindNewRepo(url) {
+	static async #bindNewRepo(url, app_name) {
+		let simpleGit = GIT();
+
+		if (app_name) {
+			simpleGit = GIT({ baseDir: `${process.cwd()}/${app_name}` });
+		}
+
 		try {
-			await git
+			await simpleGit
 				.init()
 				.add('./*')
 				.commit('Initial commit')
@@ -121,23 +134,24 @@ class GitHub {
 
 			customLogs.log('Okay, bye.', 'gray');
 			return false;
+		} else {
+			return true;
 		}
 	}
 
 	static async #addGitIgnore() {
-		const path = APP_DIR + PATH_SCRIPTS;
+		const path = process.env.APP_DIR + PATH_SCRIPTS;
 
 		await consoleExec(`bash ${path}/add_gitignore.sh`, false);
 	}
 
-	static async initRepo(isFirstQuestion = true) {
+	static async initRepo(isFirstQuestion = true, app_name = '') {
 		const isInit = await GitHub.#isInitRepo(isFirstQuestion);
 
 		if (isInit) {
 			const octokit = await GitHub.#authenticate();
-			const url_repo = await GitHub.#createRep(octokit);
-			await GitHub.#addGitIgnore();
-			const isCreateRepo = await GitHub.#bindNewRepo(url_repo);
+			const url_repo = await GitHub.#createRepo(octokit, app_name);
+			const isCreateRepo = await GitHub.#bindNewRepo(url_repo, app_name);
 
 			if (isCreateRepo) {
 				customLogs.success('Command complete');
