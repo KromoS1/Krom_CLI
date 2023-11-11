@@ -4,7 +4,12 @@ const git = require('simple-git')();
 const Configstore = require('configstore');
 
 const { consoleExec } = require('../../utils/spawn');
-const { initRepoQuestion, tokenQuestion, questions } = require('./lib');
+const {
+	initRepoQuestion,
+	tokenQuestion,
+	questions,
+	createPullQuestion
+} = require('./lib');
 const customLogs = require('../../utils/customLogs');
 const packageJson = require('../../../package.json');
 const config = new Configstore(packageJson.name);
@@ -12,24 +17,96 @@ const { APP_DIR, PATH_SCRIPTS } = require('../../variable');
 const { Loader } = require('../../utils/loader');
 
 class GitHub {
+	static async #createPullRequest(octokit, simpleGit, currentBranch) {
+		let owner = '';
+		let repo = '';
+
+		const data = await octokit.rest.users.getAuthenticated();
+		if (data.status == 200) {
+			owner = data.data.login;
+		}
+
+		await simpleGit.revparse(['--show-toplevel'], (err, result) => {
+			if (err) {
+				console.error(err);
+				return;
+			}
+			repo = result.trim().split('/').pop();
+		});
+
+		octokit.rest.pulls
+			.list({
+				owner,
+				repo
+			})
+			.then(response => {
+				response.data.forEach(pull => {
+					console.log(pull.url);
+					console.log(currentBranch);
+					if (pull.head.label == `${owner}:${currentBranch}`) {
+						console.log('пул есть');
+					}
+				});
+				// console.log(response.data);
+			});
+
+		// octokit.rest.pulls
+		// 	.create({
+		// 		owner,
+		// 		repo,
+		// 		title: 'test pull request',
+		// 		head: currentBranch,
+		// 		base: 'main'
+		// 	})
+		// 	.then(response => {
+		// 		const pullRequestNumber = response.data.number;
+		// 		console.log(
+		// 			`Пул-реквест успешно создан: ${remoteUrl}/pull/${pullRequestNumber}`
+		// 		);
+		// 	})
+		// 	.catch(error => {
+		// 		console.error(
+		// 			'Ошибка при создании пул-реквеста:',
+		// 			error.message
+		// 		);
+		// 	});
+	}
+
 	static async push(flags, message) {
+<<<<<<< Updated upstream:src/executor/github/index.js.js
+=======
+		const octokit = await GitHub.#authenticate();
+
+		const simpleGit = GIT();
+>>>>>>> Stashed changes:src/executor/github/index.js
 		const loader = new Loader();
 		loader.start();
 
 		const currentBranch = await git.branch().then(branch => branch.current);
 		const message_commit = flags.message ? message : currentBranch;
 
+<<<<<<< Updated upstream:src/executor/github/index.js.js
 		try {
 			await git
 				.add('./*')
 				.commit(message_commit)
 				.push('origin', currentBranch, ['--set-upstream']);
+=======
+		// try {
+		// 	await simpleGit
+		// 		.add('./*')
+		// 		.commit(message_commit)
+		// 		.push('origin', currentBranch, ['--set-upstream']);
+>>>>>>> Stashed changes:src/executor/github/index.js
 
-			loader.stop();
-			customLogs.success('Command push complete');
-		} catch (e) {
-			customLogs.log(e.message);
-		}
+		loader.stop();
+
+		customLogs.success('Command push complete');
+
+		await GitHub.#createPullRequest(octokit, simpleGit, currentBranch);
+		// } catch (e) {
+		// 	customLogs.log(e.message);
+		// }
 	}
 
 	static async #authenticate() {

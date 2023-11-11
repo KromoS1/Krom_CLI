@@ -52,8 +52,19 @@ const questions = [
 	}
 ];
 
+const createPullQuestion = [
+	{
+		name: 'create_pull',
+		type: 'input',
+		message: 'Want to create a pull request?',
+		choices: ['Yes', 'No'],
+		default: 'Yes'
+	}
+];
+
 module.exports = {
 	initRepoQuestion,
 	tokenQuestion,
-	questions
+	questions,
+	createPullQuestion
 };
