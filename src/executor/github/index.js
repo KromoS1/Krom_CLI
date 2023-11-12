@@ -156,7 +156,9 @@ class GitHub {
 			customLogs.log(e.message);
 		}
 
-		await GitHub.#createPullRequest(octokit, simpleGit, currentBranch);
+		if (currentBranch !== 'main') {
+			await GitHub.#createPullRequest(octokit, simpleGit, currentBranch);
+		}
 	}
 
 	static async #authenticate() {
