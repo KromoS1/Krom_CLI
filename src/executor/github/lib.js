@@ -52,8 +52,19 @@ const questions = [
 	}
 ];
 
+const createPRQuestion = [
+	{
+		name: 'create_pr',
+		type: 'input',
+		message: 'Want to create a pull request?',
+		choices: ['Yes', 'No'],
+		default: 'Yes'
+	}
+];
+
 module.exports = {
 	initRepoQuestion,
 	tokenQuestion,
-	questions
+	questions,
+	createPRQuestion
 };

@@ -4,7 +4,12 @@ const GIT = require('simple-git');
 const Configstore = require('configstore');
 
 const { consoleExec } = require('../../utils/spawn');
-const { initRepoQuestion, tokenQuestion, questions } = require('./lib');
+const {
+	initRepoQuestion,
+	tokenQuestion,
+	questions,
+	createPRQuestion
+} = require('./lib');
 const customLogs = require('../../utils/customLogs');
 const packageJson = require('../../../package.json');
 const config = new Configstore(packageJson.name);
@@ -12,7 +17,122 @@ const { PATH_SCRIPTS } = require('../../variable');
 const { Loader } = require('../../utils/loader');
 
 class GitHub {
+	static async #getDataLocalGit(octokit, simpleGit) {
+		let owner = '';
+		let repo = '';
+
+		const loader = new Loader();
+		loader.start();
+
+		try {
+			const data = await octokit.rest.users.getAuthenticated();
+
+			if (data.status == 200) {
+				owner = data.data.login;
+			}
+			loader.stop();
+		} catch (e) {
+			loader.stop();
+			customLogs.error(e.message);
+		}
+
+		try {
+			await simpleGit.revparse(['--show-toplevel'], (err, result) => {
+				if (err) {
+					console.error(err);
+					return;
+				}
+				repo = result.trim().split('/').pop();
+			});
+			loader.stop();
+		} catch (e) {
+			loader.stop();
+			customLogs.error(e.message);
+		}
+
+		return { owner, repo };
+	}
+
+	static async #checkingPullRequest(octokit, { owner, repo }) {
+		let isPull = false;
+
+		const loader = new Loader();
+
+		loader.start();
+		try {
+			const res = await octokit.rest.pulls.list({
+				owner,
+				repo
+			});
+
+			res.data.forEach(pull => {
+				if (pull.head.label == `${owner}:${currentBranch}`) {
+					isPull = pull;
+				}
+			});
+
+			loader.stop();
+		} catch (e) {
+			loader.stop();
+			customLogs.error(e.message);
+		}
+
+		return isPull;
+	}
+
+	static async #createPullRequest(octokit, simpleGit, currentBranch) {
+		const answer = await inquirer.prompt(createPRQuestion);
+
+		let isAnswer = false;
+
+		switch (answer.create_pr) {
+			case 'Yes':
+			case 'yes':
+			case 'y':
+				isAnswer = true;
+		}
+
+		if (!isAnswer) return;
+
+		const loader = new Loader();
+
+		const { owner, repo } = await GitHub.#getDataLocalGit(
+			octokit,
+			simpleGit
+		);
+
+		const isPullRequest = await GitHub.#checkingPullRequest(octokit, {
+			owner,
+			repo
+		});
+
+		if (isPullRequest) {
+			customLogs.warning('A pull request exists for this branch.');
+			return;
+		}
+
+		try {
+			loader.start();
+
+			const res = await octokit.rest.pulls.create({
+				owner,
+				repo,
+				title: currentBranch,
+				head: currentBranch,
+				base: 'main'
+			});
+			loader.stop();
+			customLogs.success(`Pull request created successfully:`);
+			customLogs.warning(`\n<---  ${res.data.html_url}  --->`);
+		} catch (e) {
+			loader.stop();
+			customLogs.error(`Error creating pull request: \n${e.message}`);
+		}
+	}
+
 	static async push(flags, message) {
+		const octokit = await GitHub.#authenticate();
+
 		const simpleGit = GIT();
 		const loader = new Loader();
 		loader.start();
@@ -29,10 +149,14 @@ class GitHub {
 				.push('origin', currentBranch, ['--set-upstream']);
 
 			loader.stop();
-			customLogs.success('Command push complete');
+
+			customLogs.success('Command push complete\n\n');
 		} catch (e) {
+			loader.stop();
 			customLogs.log(e.message);
 		}
+
+		await GitHub.#createPullRequest(octokit, simpleGit, currentBranch);
 	}
 
 	static async #authenticate() {
