@@ -1,27 +1,30 @@
 #!/bin/bash
 
-current_dir="$PWD";
-script_path="$(dirname "$(realpath "$0")")"
+GREEN='\033[0;32m'      #  ${GREEN}
+CYAN='\033[0;36m'       #  ${CYAN}
+YELLOW='\033[0;33m'     #  ${YELLOW}
+BREAK='\033[m'       #  ${BREAK}
+BOLD='\033[1m'       #  ${BOLD}  
 
-cd "$script_path"
+app_name="$1";
 
-krom_dir=$(dirname "$PWD");
+current_dir="$PWD";#
 
-source $script_path/common.sh;
+script_path="$(dirname "$(realpath "$0")")"#
 
-echo -e "${CYAN}<---Создание приложения--->";
+cd "$script_path"#
 
-echo -e "${YELLOW}Введите название приложения:";
-read app_name; 
+echo "${CYAN}<---Application creation--->";
 
 cd ~ && cd $current_dir;
 
-bun create expo-app $app_name -t expo-template-blank-typescript;
+bun create expo-app $app_name --template expo-template-blank-typescript;
 
 cd ./$app_name;
 
-echo -e "${CYAN}<---Установка нунжых зависимостей--->${BREAK}";
+bun install;
 
+#####
 bun install @react-navigation/native compose-function expo-localization i18next react-i18next react-native-exception-handler react-native-gesture-handler react-native-restart react-native-safe-area-context react-native-screens;
 
 bun install @types/compose-function -D;

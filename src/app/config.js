@@ -2,20 +2,20 @@ const pkg = require('../../package.json');
 
 const confCommands = {
 	template: { desc: 'Starts template creation' },
-	push: { desc: 'Push commits project.' },
 	init_repo: { desc: 'Initialize repository in GitHub' },
+	push: { desc: 'Push commits project.' },
 	show: {
-		desc: 'Shows the actual path to the directory with executable files'
+		desc: 'Shows data depending on the flag'
 	},
 	help: { desc: `Print help info` }
 };
 
 const confFlags = {
-	files: {
+	templates: {
 		type: `boolean`,
 		default: false,
-		alias: `f`,
-		desc: `Use to view a list of executable files in a directory`
+		alias: `t`,
+		desc: `Used to view a list of available templates`
 	},
 	message: {
 		type: `boolean`,
@@ -34,7 +34,7 @@ module.exports = {
 		help: 'help'
 	},
 	flags: {
-		all: ['files', 'message']
+		all: ['templates', 'message']
 	},
 
 	confHelp: {
@@ -43,18 +43,18 @@ module.exports = {
 		commands: confCommands,
 		examples: [
 			{
-				command: `template <file_name>`
+				command: `template <template_name>`
+			},
+			{
+				command: `init_repo`
 			},
 			{
 				command: `push`,
 				flags: [`message`]
 			},
 			{
-				command: `init_repo`
-			},
-			{
 				command: 'show',
-				flags: ['files']
+				flags: ['templates']
 			}
 		]
 	},
